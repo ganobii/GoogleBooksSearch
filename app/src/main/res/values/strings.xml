@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">GoogleBooksSearch</string>
+    <string name="app_name">Google Books Finder</string>
+
+    <!-- Text hint in the search field [CHAR LIMIT=NONE] -->
+    <string name="search_hint">Search books</string>
+
+    <!-- Text indicating the search field [CHAR LIMIT=NONE] -->
+    <string name="action_search">Search</string>
+
+    <!-- Text to display in the list when there is not network connection [CHAR LIMIT=NONE] -->
+    <string name="no_internet_connection">No internet connection</string>
+
+    <!-- Text to display in the list when there are no earthquakes [CHAR LIMIT=NONE] -->
+    <string name="no_books_found">No books found</string>
+
+    <!-- Text for search button [CHAR LIMIT=NONE] -->
+    <string name="search_books">Search</string>
+
+    <!-- Text for search button [CHAR LIMIT=NONE] -->
+    <string name="please_enter_search">"Please enter a search word or term"</string>
+
+
 </resources>
