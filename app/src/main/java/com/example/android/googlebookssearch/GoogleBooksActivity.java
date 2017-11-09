@@ -27,7 +27,7 @@ public class GoogleBooksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.google_books_activity);
 
-        final SearchView searchView = (SearchView)findViewById(R.id.search_view);
+        final SearchView searchView = (SearchView) findViewById(R.id.search_view);
 
         final Button searchButton = (Button) findViewById(R.id.button_search);
 
@@ -43,7 +43,6 @@ public class GoogleBooksActivity extends AppCompatActivity {
                 CallIntent();
                 return false;
             }
-
         });
 
         // When search button is clicked, checks to see if user has entered any text. If so,
@@ -51,18 +50,13 @@ public class GoogleBooksActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //check for valid search term, display warning if no text entered
-                if (SearchTerm().trim().length() < 1) {
-                    Toaster.show(getString(R.string.please_enter_search));
-                }else {
-                    CallIntent();
-                }
+                CallIntent();
             }
         });
     }
 
     public String SearchTerm() {
-        SearchView searchView = (SearchView)findViewById(R.id.search_view);
+        SearchView searchView = (SearchView) findViewById(R.id.search_view);
         String searchTerm = searchView.getQuery().toString();
         return searchTerm;
     }

@@ -1,6 +1,6 @@
 package com.example.android.googlebookssearch;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,7 @@ public class GoogleBooksAdapter extends ArrayAdapter<GoogleBooks> {
      * @param context     The current context. Used to inflate the layout file.
      * @param googleBooks A List of GoogleBooks objects to display in a list
      */
-    public GoogleBooksAdapter(Activity context, ArrayList<GoogleBooks> googleBooks) {
+    public GoogleBooksAdapter(Context context, ArrayList<GoogleBooks> googleBooks) {
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
         // the second argument is used when the ArrayAdapter is populating a single TextView.
         // Because this is a custom adapter for two TextViews and an ImageView, the adapter is not
@@ -52,10 +52,11 @@ public class GoogleBooksAdapter extends ArrayAdapter<GoogleBooks> {
         }
 
         // Get the {@link GoogleBooks} object located at this position in the list
-        final GoogleBooks currentBook = getItem(position);
+        GoogleBooks currentBook = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID title.
         TextView titleTextView = (TextView) listItemView.findViewById(R.id.title);
+
         // Set text using the string value stored in the variable primaryLocation.
         titleTextView.setText(currentBook.getTitle());
 
@@ -82,8 +83,6 @@ public class GoogleBooksAdapter extends ArrayAdapter<GoogleBooks> {
 
             smallThumbnail.setImageBitmap(currentBook.getSmallThumbnail());
         }
-
-
 
         return listItemView;
     }

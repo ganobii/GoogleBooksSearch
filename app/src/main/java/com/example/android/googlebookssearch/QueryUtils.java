@@ -142,9 +142,6 @@ public final class QueryUtils {
         // Create an empty ArrayList that we can start adding earthquakes to
         List<GoogleBooks> googleBooks = new ArrayList<>();
 
-        // String variable for storing book descriptions.
-        String description;
-
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
@@ -189,7 +186,7 @@ public final class QueryUtils {
                 //Check for the key, if it exists, getString
                 if (volumeInfoObject.has("authors")) {
                     authorsArray = volumeInfoObject.getJSONArray("authors");
-
+                    //Extract Author Names
                     for (int a = 0; a < authorsArray.length(); a++) {
                         String author = authorsArray.getString(a);
                         authors.add(author);
