@@ -27,19 +27,17 @@ import static android.graphics.BitmapFactory.decodeStream;
 
 public final class QueryUtils {
 
-    /**
-     * Tag for the log messages
-     */
+    // Tag for the log messages.
     public static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
      * Query the Google Books dataset and return an {@link GoogleBooks} object to represent a single book.
      */
     public static List<GoogleBooks> fetchGoogleBooksData(String requestUrl) {
-        // Create URL object
+        // Create URL object.
         URL url = createUrl(requestUrl);
 
-        // Perform HTTP request to the URL and receive a JSON response back
+        // Perform HTTP request to the URL and receive a JSON response back.
         String jsonResponse = null;
         try {
             jsonResponse = makeHttpRequest(url);
@@ -47,12 +45,12 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
 
-        // Extract relevant fields from the JSON response and create an {@link Earthquake} object
+        // Extract relevant fields from the JSON response and create an {@link GoogleBooks} object.
         List<GoogleBooks> googleBooks = extractFeatureFromJson(jsonResponse);
 
         Log.i(LOG_TAG, "Testing fetchGoogleBooksData...");
 
-        // Return the {@link GoogleBppls}
+        // Return the {@link GoogleBooks}
         return googleBooks;
     }
 
@@ -147,20 +145,17 @@ public final class QueryUtils {
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
 
-            // Initilase the JSON variables.
+            // Initilaze the JSON variables.
             JSONObject currentBookObject;
             JSONObject volumeInfoObject;
             JSONObject accessInfo;
-            // Initialize title = null for rare case of no title.
             String title = null;
             JSONArray authorsArray;
-            ArrayList<String> authors = new ArrayList<>();
-            // Initialize smallThumbnail= null as some title have no image.
             JSONObject imageLinks;
             Bitmap smallThumbnail = null;
             String webReaderLink = null;
 
-            // Create a JSONObject from the JSON response string
+            // Create a JSONObject from the JSON response string.
             JSONObject baseJsonObject = new JSONObject(googleBooksJSON);
 
             // Extract the JSONArray associated with the key called "items",
@@ -170,7 +165,10 @@ public final class QueryUtils {
             // For each book in the googleBooksArray, create an {@link GoogleBooks} object
             for (int i = 0; i < itemsArray.length(); i++) {
 
-                // Get a single book at position i within the list of earthquakes
+                // Initialize an ArrayList to later build a list of authors.
+                ArrayList<String> authors = new ArrayList<>();
+
+                // Get a single book at position i within the list of books.
                 currentBookObject = itemsArray.getJSONObject(i);
 
                 // For a given book, extract the JSONObject associated with the
@@ -186,7 +184,7 @@ public final class QueryUtils {
                 //Check for the key, if it exists, getString
                 if (volumeInfoObject.has("authors")) {
                     authorsArray = volumeInfoObject.getJSONArray("authors");
-                    //Extract Author Names
+                    //Extract author names.
                     for (int a = 0; a < authorsArray.length(); a++) {
                         String author = authorsArray.getString(a);
                         authors.add(author);
@@ -201,6 +199,7 @@ public final class QueryUtils {
                     }
                 }
 
+                // Extract the JSONObject associated with the key called "accessInfo".
                 accessInfo = currentBookObject.getJSONObject("accessInfo");
 
                 // Extract the value for the key called "webReaderLink".
@@ -208,8 +207,8 @@ public final class QueryUtils {
                     webReaderLink = accessInfo.getString("webReaderLink");
                 }
 
-                // Create a new {@link GoogleBooks} object with the magnitude, location, time,
-                // and url from the JSON response.
+                // Create a new {@link GoogleBooks} object with the title, authors, smallThumbnail,
+                // and webReaderLink from the JSON response.
                 GoogleBooks currentBook = new GoogleBooks(title, authors, smallThumbnail, webReaderLink);
 
                 // Add the new {@link GoogleBooks} to the list of books.
@@ -224,14 +223,13 @@ public final class QueryUtils {
             Log.e("QueryUtils", "Problem parsing the Google Books results", e);
         }
 
-        // Return the list of earthquakes
+        // Return the list of books.
         return googleBooks;
     }
 
-    /*
- * For SmallThumbnail Loading
- */
-    public static Bitmap fetchThumbnail(String requestUrl) {
+
+     // For smallThumbnail Loading.
+     public static Bitmap fetchThumbnail(String requestUrl) {
         //Create URL object
         URL url = createUrl(requestUrl);
 
@@ -246,7 +244,7 @@ public final class QueryUtils {
         return smallThumbnail;
     }
 
-    //Method that makes HTTP request and returns a Bitmap as the response
+    // Method that makes HTTP request and returns a Bitmap as the response
     private static Bitmap makeHttpRequestForBitmap(URL url) throws IOException {
         Bitmap bitmapResponse = null;
 

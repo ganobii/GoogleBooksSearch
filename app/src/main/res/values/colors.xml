@@ -15,4 +15,10 @@
     <!-- Tab text color for app -->
     <color name="tab_text_colour">#455a64</color>
 
+    <!-- Swipe Refresh colors-->
+    <color name="swipebluecolor">#3369e8</color>
+    <color name="swiperedcolor">#F44336</color>
+    <color name="swipegreencolor">#009925</color>
+    <color name="swipeyellowcolor">#eeb211</color>
+
 </resources>

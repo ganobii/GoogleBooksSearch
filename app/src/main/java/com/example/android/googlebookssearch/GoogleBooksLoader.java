@@ -12,10 +12,10 @@ import java.util.List;
 
 public class GoogleBooksLoader extends AsyncTaskLoader<List<GoogleBooks>> {
 
-    /** Tag for log messages */
+    // Tag for log messages.
     private static final String LOG_TAG = GoogleBooksLoader.class.getName();
 
-    // Query URL
+    // Query URL.
     private String mUrl;
 
     /**
@@ -31,7 +31,8 @@ public class GoogleBooksLoader extends AsyncTaskLoader<List<GoogleBooks>> {
 
     @Override
     protected void onStartLoading() {
-        //Think of this as AsyncTask onPreExecute() method,start your progress bar,and at the end call forceLoad();
+        //Think of this as AsyncTask onPreExecute() method,start your progress bar,
+        // and at the end call forceLoad();
         forceLoad();
         Log.i(LOG_TAG, "Testing onStartLoading...");
     }

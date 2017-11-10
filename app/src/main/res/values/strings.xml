@@ -16,8 +16,13 @@
     <!-- Text for search button [CHAR LIMIT=NONE] -->
     <string name="search_books">Search</string>
 
-    <!-- Text for search button [CHAR LIMIT=NONE] -->
-    <string name="please_enter_search">"Please enter a search word or term"</string>
+    <!-- Text for Spinner's title category [CHAR LIMIT=NONE] -->
+    <string name="title_category">Title</string>
 
+    <!-- Text for Spinner's author category [CHAR LIMIT=NONE] -->
+    <string name="author_category">Author</string>
+
+    <!-- Text for Spinner's genre category [CHAR LIMIT=NONE] -->
+    <string name="genre_category">Genre</string>
 
 </resources>

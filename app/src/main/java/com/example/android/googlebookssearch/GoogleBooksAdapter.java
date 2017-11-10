@@ -57,13 +57,13 @@ public class GoogleBooksAdapter extends ArrayAdapter<GoogleBooks> {
         // Find the TextView in the list_item.xml layout with the ID title.
         TextView titleTextView = (TextView) listItemView.findViewById(R.id.title);
 
-        // Set text using the string value stored in the variable primaryLocation.
+        // Set text using the string value stored in the GoogleBooks object.
         titleTextView.setText(currentBook.getTitle());
 
-        // Find the TextView in the list_item.xml layout with the ID description.
+        // Find the TextView in the list_item.xml layout with the ID authors.
         TextView authorTextView = (TextView) listItemView.findViewById(R.id.authors);
 
-        //Get the Title and set it to a authors textview
+        // Create an array list of authors.
         ArrayList<String> authorsArray = new ArrayList<>(currentBook.getAuthors());
         StringBuilder authors = new StringBuilder();
         if (authorsArray.size() == 1) {
@@ -76,14 +76,19 @@ public class GoogleBooksAdapter extends ArrayAdapter<GoogleBooks> {
             }
         }
 
+        // Set the list of authors to the authorTextView.
         authorTextView.setText(authors);
 
+
         if(currentBook.getSmallThumbnail() != null) {
+            // Find the ImageView in the list_item.xml layout with the ID small_thumbnail.
             ImageView smallThumbnail = (ImageView) listItemView.findViewById(R.id.small_thumbnail);
 
+            // Set image using the Bitmap stored in the GoogleBooks object.
             smallThumbnail.setImageBitmap(currentBook.getSmallThumbnail());
         }
 
+        // Return all values and build the list item.
         return listItemView;
     }
 
