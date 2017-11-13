@@ -1,10 +1,15 @@
 package com.example.android.googlebookssearch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,10 +27,6 @@ public class GoogleBooksActivity extends AppCompatActivity implements AdapterVie
     // Base URL.
     private static final String API_REQUEST_URL_1 =
             "https://www.googleapis.com/books/v1/volumes?q=";
-
-    // Sets max number of books.
-    private static final String API_REQUEST_URL_2 =
-            "&orderBy=relevance&maxResults=10";
 
     // Member variable for spinner search field selected.
     private String mSearchField;
@@ -75,7 +76,7 @@ public class GoogleBooksActivity extends AppCompatActivity implements AdapterVie
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // On keyboard submit begin search.
-                CallIntent();
+                callIntent();
                 return false;
             }
         });
@@ -84,9 +85,26 @@ public class GoogleBooksActivity extends AppCompatActivity implements AdapterVie
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CallIntent();
+                callIntent();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -119,25 +137,42 @@ public class GoogleBooksActivity extends AppCompatActivity implements AdapterVie
     }
 
     // Store the user inputted query in a new String variable.
-    public String SearchTerm() {
+    public String searchTerm() {
         SearchView searchView = (SearchView) findViewById(R.id.search_view);
         String searchTerm = searchView.getQuery().toString();
         return searchTerm;
     }
 
     // Create the URL from a combination of the base URL, user inputted category,
-    // user inputted search term, and the max number of books filter.
-    public String CreateUrl() {
-        String newUrl = API_REQUEST_URL_1 + mSearchField + "%3C" + SearchTerm().trim() + "%3E" + API_REQUEST_URL_2;
-        newUrl = newUrl.replaceAll(" ", "%20");
-        return newUrl;
+    // user inputted search term, and user selected settings.
+    public String createUrl() {
+        String newUrl = API_REQUEST_URL_1 + mSearchField + "%3C" + searchTerm().trim() + "%3E";
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String maxResults = sharedPrefs.getString(
+                getString(R.string.settings_max_results_key),
+                getString(R.string.settings_max_results_default));
+
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default));
+
+        Uri baseUri = Uri.parse(newUrl);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendQueryParameter("orderBy", orderBy);
+        uriBuilder.appendQueryParameter("maxResults", maxResults);
+
+        String fullUri = uriBuilder.toString();
+        fullUri = fullUri.replaceAll(" ", "%20");
+        return fullUri;
     }
 
     // Call intent to start ListActivity, pass along the built URL.
-    public void CallIntent() {
+    public void callIntent() {
         Intent listActivityIntent = new Intent(GoogleBooksActivity.this, ListActivity.class);
-        listActivityIntent.putExtra("fullUrl", CreateUrl());
-        Log.e(LOG_TAG, "The url is:" + CreateUrl());
+        listActivityIntent.putExtra("fullUrl", createUrl());
+        Log.e(LOG_TAG, "The url is:" + createUrl());
         startActivity(listActivityIntent);
     }
 }

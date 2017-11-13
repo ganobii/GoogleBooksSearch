@@ -19,8 +19,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ListActivity">
+        <activity
+            android:name=".ListActivity">
+        </activity>
 
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.googlebookssearch.GoogleBooksActivity"/>
         </activity>
 
     </application>

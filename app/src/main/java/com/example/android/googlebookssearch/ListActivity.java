@@ -144,7 +144,9 @@ public class ListActivity extends AppCompatActivity
                 // Clear the adapter of existing data.
                 mAdapter.clear();
                 // Show text to let the user know app is loading during refresh.
-                mEmptyTextView.setText("Loading books...");
+                mEmptyTextView.setText("");
+
+                mProgressBar.setVisibility(View.VISIBLE);
                 // Restart the Loader Manager.
                 mLoaderManager.restartLoader(BOOK_LOADER, null, ListActivity.this);
                 // Remove the refresh icon.
